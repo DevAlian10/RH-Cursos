@@ -1,0 +1,147 @@
+<div class="container">
+    <div class="m-0 vh-100 row justify-content-center align-items-center">
+        <div class="col d-none d-lg-block d-xl-block col-lg-6 col-xl-6 p-2">
+            <img src="../../../assets/img/capacitación.png" class="img-fluid" alt="">
+            <h2 class="fw-bold text-center">Registro de cursos</h2>
+            <p>Registra tus cursos impartidos o recividos durante el presente mes</p>
+        </div>
+        <!-- Login -->
+        <!-- <div *ngIf="activateLogin" class="col p-2">
+            <div class="text-center">
+                <img src="../../../assets/img/logo_alian.png" alt="">
+            </div>
+            <h2 class="fw-bold text-center py-5">Iniciar sesión</h2>
+            <form class="form" [formGroup]="formLoging">
+                <div class="mb-4">
+                    <label for="emailControl" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control form-control-lg" formControlName="email" id="emailControl"
+                        placeholder="Ejemplo: alian@alian.mx">
+                    <ng-container *ngFor="let validation of validation_messages_login.email">
+                        <div class="alert alert-danger p-2"
+                            *ngIf="formLoging.controls['email'].hasError(validation.type) && (formLoging.controls['email'].dirty || formLoging.controls['email'].touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="mb-4">
+                    <label for="passwordControl" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control form-control-lg" formControlName="password" id="passwordControl" placeholder="Password">
+                    <ng-container *ngFor="let validation of validation_messages_login.password">
+                        <div class="alert alert-danger p-2"
+                            *ngIf="formLoging.controls['password'].hasError(validation.type) && (formLoging.controls['password'].dirty || formLoging.controls['password'].touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="d-grid mb-3">
+                    <button class="btn btn-primary btn-lg" (click)="singIn()" [disabled]="formLoging.invalid">Iniciar
+                        sesión</button>
+                </div>
+                <div class="col mb-3">
+                    <div class="d-grid">
+                        <button class="btn btn-danger btn-sm" (click)="classVisible('register')">Registrarse</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="d-grid">
+                            <button class="btn btn-outline-success btn-sm" (click)="classVisible('reset')">Reestablecer
+                                contraseña</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-grid">
+                            <button class="btn btn-outline-primary btn-sm" (click)="classVisible('verify')">Verificar
+                                correo electrónico</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div> -->
+        <!-- Register -->
+        <div class="col p-2">
+            <div class="text-center">
+                <img src="../../../assets/img/logo_alian.png" alt="">
+            </div>
+            <h2 class="fw-bold text-center py-5">Registrarse</h2>
+            <form class="form" [formGroup]="formRegister">
+                <div class="mb-4">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" class="form-control" formControlName="nombre" placeholder="Nombre" id="nombre">
+                    <ng-container *ngFor="let validation of validation_messages_register.nombre">
+                        <div class="alert alert-danger p-2" *ngIf="formRegister.controls['nombre'].hasError(validation.type) && (formRegister.controls['nombre'].dirty || formRegister.controls['nombre'].touched)">
+                            {{validation.message}}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="mb-4">
+                    <label for="apellidos" class="form-label">Apellidos</label>
+                    <input type="text" class="form-control" formControlName="apellidos" placeholder="Apellidos" id="apellidos">
+                    <ng-container *ngFor="let validation of validation_messages_register.apellidos">
+                        <div class="alert alert-danger p-2" *ngIf="formRegister.controls['apellidos'].hasError(validation.type) && (formRegister.controls['apellidos'].dirty || formRegister.controls['apellidos'].touched)">
+                            {{validation.message}}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="mb-4">
+                    <label for="departamento" class="form-label">Departamento</label>
+                    <input type="text" class="form-control" formControlName="departamento" placeholder="Departamento" id="departamento">
+                    <ng-container *ngFor="let validation of validation_messages_register.departamento">
+                        <div class="alert alert-danger p-2" *ngIf="formRegister.controls['departamento'].hasError(validation.type) && (formRegister.controls['departamento'].dirty || formRegister.controls['departamento'].touched)">
+                            {{validation.message}}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="mb-4">
+                    <label for="puesto" class="form-label">Puesto</label>
+                    <input type="text" class="form-control" formControlName="puesto" placeholder="Puesto" id="puesto">
+                    <ng-container *ngFor="let validation of validation_messages_register.puesto">
+                        <div class="alert alert-danger p-2" *ngIf="formRegister.controls['puesto'].hasError(validation.type) && (formRegister.controls['puesto'].dirty || formRegister.controls['puesto'].touched)">
+                            {{validation.message}}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control form-control-lg" formControlName="email"
+                        id="email" placeholder="Ejemplo: alian@alian.mx">
+                    <ng-container *ngFor="let validation of validation_messages_register.email">
+                        <div class="alert alert-danger p-2"
+                            *ngIf="formRegister.controls['email'].hasError(validation.type) && (formRegister.controls['email'].dirty || formRegister.controls['email'].touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control form-control-lg" formControlName="password"
+                        id="password" placeholder="********">
+                    <ng-container *ngFor="let validation of validation_messages_register.password">
+                        <div class="alert alert-danger p-2"
+                            *ngIf="formRegister.controls['password'].hasError(validation.type) && (formRegister.controls['password'].dirty || formRegister.controls['password'].touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="mb-4">
+                    <label for="type" class="form-label">Tipo personal</label>
+                    <input type="text" class="form-control form-control-lg" formControlName="type"
+                        id="type" placeholder="********">
+                    <ng-container *ngFor="let validation of validation_messages_register.type">
+                        <div class="alert alert-danger p-2"
+                            *ngIf="formRegister.controls['type'].hasError(validation.type) && (formRegister.controls['type'].dirty || formRegister.controls['type'].touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="d-grid mb-4">
+                    <button class="btn btn-primary btn-lg" (click)="register()"
+                        [disabled]="formRegister.invalid">Registrarse</button>
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-outline-primary btn-sm"><- Back</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

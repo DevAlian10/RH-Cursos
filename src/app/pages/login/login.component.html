@@ -1,0 +1,140 @@
+<div class="container">
+    <div class="m-0 vh-100 row justify-content-center align-items-center">
+        <div class="col d-none d-lg-block d-xl-block col-lg-6 col-xl-6 p-2">
+            <img src="../../../assets/img/capacitación.png" class="img-fluid" alt="">
+            <h2 class="fw-bold text-center">Registro de cursos</h2>
+            <p>Registra tus cursos impartidos o recividos durante el presente mes</p>
+        </div>
+        <!-- Login -->
+        <div class="col p-2">
+            <div class="text-center">
+                <img src="../../../assets/img/logo_alian.png" alt="">
+            </div>
+            <h2 class="fw-bold text-center py-5">Iniciar sesión</h2>
+            <form class="form" [formGroup]="formLogin">
+                <div class="mb-4">
+                    <label for="emailControl" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control form-control-lg" formControlName="email" id="emailControl" placeholder="Ejemplo: alian@alian.mx">
+                    <ng-container *ngFor="let validation of validation_messages_login.email">
+                        <div class="alert alert-danger p-2"
+                            *ngIf="formLogin.controls['email'].hasError(validation.type) && (formLogin.controls['email'].dirty || formLogin.controls['email'].touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="mb-4">
+                    <label for="passwordControl" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control form-control-lg" formControlName="password" id="passwordControl" placeholder="Password">
+                    <ng-container *ngFor="let validation of validation_messages_login.password">
+                        <div class="alert alert-danger p-2"
+                            *ngIf="formLogin.controls['password'].hasError(validation.type) && (formLogin.controls['password'].dirty || formLogin.controls['password'].touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="d-grid gap-3">
+                    <button class="btn btn-primary btn-lg" (click)="singIn()" [disabled]="formLogin.invalid">Iniciar sesión</button>
+                    <button class="btn btn-danger btn-lg">Solicitar acceso</button>
+                </div>
+                <!-- <div class="col mb-3">
+                    <div class="d-grid">
+                        <button class="btn btn-danger btn-sm" (click)="classVisible('register')">Registrarse</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div class="d-grid">
+                            <button class="btn btn-outline-success btn-sm" (click)="classVisible('reset')">Reestablecer
+                                contraseña</button>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="d-grid">
+                            <button class="btn btn-outline-primary btn-sm" (click)="classVisible('verify')">Verificar
+                                correo electrónico</button>
+                        </div>
+                    </div>
+                </div> -->
+            </form>
+        </div>
+        <!-- Register -->
+        <!-- <div *ngIf="activarRegister" class="col p-2">
+            <div class="text-center">
+                <img src="../../../assets/img/logo_alian.png" alt="">
+            </div>
+            <h2 class="fw-bold text-center py-5">Registrarse</h2>
+            <form class="form" [formGroup]="formRegister">
+                <div class="mb-4">
+                    <label for="emailControl" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control form-control-lg" formControlName="newEmail"
+                        id="emailControl" placeholder="Ejemplo: alian@alian.mx">
+                    <ng-container *ngFor="let validation of validation_messages_register.newEmail">
+                        <div class="alert alert-danger p-2" *ngIf="formRegister.controls['newEmail'].hasError(validation.type) && (formRegister.controls['newEmail'].dirty || formRegister.controls['newEmail'].touched)">
+                            {{ validation.message }}
+                        </div>                        
+                    </ng-container>
+                </div>
+                <div class="mb-4">
+                    <label for="passwordControl" class="form-label">Contraseña</label>
+                    <input type="password" class="form-control form-control-lg" formControlName="newPassword"
+                        id="passwordControl" placeholder="********">
+                    <ng-container *ngFor="let validation of validation_messages_register.newPassword">
+                        <div class="alert alert-danger p-2" *ngIf="formRegister.controls['newPassword'].hasError(validation.type) && (formRegister.controls['newPassword'].dirty || formRegister.controls['newPassword'].touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="d-grid mb-4">
+                    <button class="btn btn-primary btn-lg" (click)="registerUser()"
+                        [disabled]="formRegister.invalid">Registrarse</button>
+                </div>
+                <div class="d-grid">
+                    <button class="btn btn-outline-primary btn-sm" (click)="classVisible('login')">Login</button>
+                </div>
+            </form>
+        </div> -->
+        <!-- Reset -->
+        <!-- <div *ngIf="activarReset" class="col p-2">
+            <div class="text-center">
+                <img src="../../../assets/img/logo_alian.png" alt="">
+            </div>
+            <h2 class="fw-bold text-center py-5">Reestablecer contraseña</h2>
+            <form class="form" [formGroup]="formReset">
+                <div class="form-group mb-4">
+                    <label for="emailResetControl" class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control form-control-lg" formControlName="emailReset"
+                        id="emailResetControl" placeholder="Ingrese su correo electrónico">
+                    <ng-container *ngFor="let validation of validation_messages_reset.emailReset">
+                        <div class="alert alert-danger p-2"
+                            *ngIf="formReset.controls['emailReset'].hasError(validation.type) && (formReset.controls['emailReset'].dirty || formReset.controls['emailReset'].touched)">
+                            {{ validation.message }}
+                        </div>
+                    </ng-container>
+                </div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-lg" (click)="resetPassword()" [disabled]="formReset.invalid">Reestablecer</button>
+                        <button class="btn  btn-outline-primary btn-sm" (click)="classVisible('login')">Login</button>
+                    </div>
+            </form>
+        </div> -->
+        <!-- Verificar correo electrónico -->
+        <!-- <div class="col p-2" *ngIf="activarVerify">
+            <div class="text-center">
+                <img src="../../../assets/img/logo_alian.png" alt="">
+            </div>
+            <h2 class="fw-bold text-center py-5">Verificar Email</h2>
+            <div class="form-group mb-2" *ngIf="authService.userData as user">
+                <p class="fs-5">Se ha enviado un mensaje a la siguiente dirección de correo electrónico: <strong>{{
+                        user.email }}</strong>. Por favor revise su correo electrónico y haga clic en el enlace para
+                    verificar su dirección de correo electrónico.</p>
+                <strong>Reenviar correo electrónico de verificaión</strong>
+                <div class="d-grid mt-2 mb-2">
+                    <button class="btn btn-primary btn-lg" (click)="verificaitonEmail()">Reenviar</button>
+                </div>
+            </div>
+            <div class="d-grid">
+                <button class="btn  btn-outline-primary" (click)="classVisible('login')">Login</button>
+            </div>
+        </div> -->
+    </div>
+</div>
