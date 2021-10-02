@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
+import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { User } from '../model/user';
 
@@ -10,9 +10,7 @@ import { User } from '../model/user';
 export class AuthService {
     //Almacenar el usuario logueado
     loginUser: any;
-    //Almacenar la data del Usuario desde la BD
-    dataUser: any;
-    //Inicializar el objeto de Usuario
+    localStorageUser: any;
 
 
     constructor(
@@ -23,28 +21,58 @@ export class AuthService {
     ) {
         /* Guardar los datos del usuario en localstorage cuando inicia Sesión y anularla cuando cierra Sesión */
         this.afAuth.authState.subscribe(async user => {
-            if (user) {
-                this.loginUser = user;
-                localStorage.setItem('dataUser', JSON.stringify(this.loginUser));
-                JSON.parse(localStorage.getItem('dataUser')!);
-                (await this.getUser(user.uid)).subscribe(async res => {
-                    this.dataUser = res?.id;
-                    if (await res?.type === 'Administrador') {
-                        this.router.navigate(['dashboard']);
+            if (user) {              
+                localStorage.setItem('localStorageUSer', JSON.stringify(user));
+                await JSON.parse(localStorage.getItem('localStorageUSer')!);
+                this.getUser(user.uid).subscribe(async res => {
+                    this.loginUser = {
+                        nombre: res?.nombre,
+                        apellidoP: res?.apellidoP,
+                        id: res?.id
+                    };
+                    localStorage.setItem('User', JSON.stringify(this.loginUser));
+                    if (res?.type === 'Administrador') {
+                        await this.router.navigate(['auth']);
+                    }
+                    if (res?.type === 'Usuario') {
+                        await this.router.navigate(['user']);
                     }
                     else {
-                        await this.router.navigate(['inicio']);
+                        await this.router.navigate(['auth']);
                     }
                 });
             } else {
-                localStorage.setItem('dataUser', null!);
-                JSON.parse(localStorage.getItem('dataUser')!);
+                localStorage.setItem('localStorageUser', null!);
+                JSON.parse(localStorage.getItem('localStorageUser')!);
             }
         });
     }
 
+    async login(email: string, password: string) {
+        try {
+            const user = await this.afAuth.signInWithEmailAndPassword(email, password);
+            this.getUser(user.user?.uid!).subscribe(res => {
+                this.loginUser = {
+                    nombre: res?.nombre,
+                    apellidoP: res?.apellidoP
+                };
+                localStorage.setItem('User', JSON.stringify(this.loginUser));
+                if (user.user?.emailVerified !== true && res?.type === 'Administrador') {
+                    this.router.navigate(['auth']);
+                } if (user.user?.emailVerified !== true && res?.type === 'Usuario') {
+                    this.router.navigate(['user']);
+                }
+                else {
+                    console.log('Password incorrecto');
+                }
+            });
+        } catch (error) {
+            alert(error);
+        }
+    }
+
     //Iniciar Sesión con correo y contrseña
-    async signIn(email: string, password: string) {
+    signIn(email: string, password: string) {
         return this.afAuth.signInWithEmailAndPassword(email, password).then(async res => {
             if (res.user?.emailVerified === false) {
                 /* this.ngZone.run(() => { */
@@ -89,7 +117,7 @@ export class AuthService {
 
     //Recuperardata del Usuario logueado
     getUser(id: string) {
-        return  this.afs.collection<User>('User').doc(id).valueChanges();
+        return this.afs.collection<User>('User').doc(id).valueChanges();
     }
 
     //Resetear password
@@ -103,7 +131,7 @@ export class AuthService {
 
     //Verificar cuando el Usuario se loquea y que el correo este verificado
     get isLoggedIn(): boolean {
-        const user = JSON.parse(localStorage.getItem('dataUser')!);
+        const user = JSON.parse(localStorage.getItem('localStorageUSer')!);
         return (user !== null && user.emailVerified === false) ? true : false;
     }
 
@@ -125,7 +153,7 @@ export class AuthService {
     //Cerrar Sesión
     async signOut() {
         return await this.afAuth.signOut().then(async () => {
-            await localStorage.removeItem('dataUser');
+            /* await localStorage.removeItem('dataUser'); */
             await this.router.navigate(['/']);
         });
     }

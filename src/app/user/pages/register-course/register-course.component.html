@@ -1,0 +1,49 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="card border-ligth my-3">
+        <div class="card-header">
+            <h2>Registrar curso</h2>
+        </div>
+        <div class="card-body">
+            <form class="form">
+                <div class="form-group mb-3">
+                    <label class="form-label" for="txtNombre">Curso</label>
+                    <input type="text" class="form-control form-control-lg" id="txtNombre" placeholder="Nombre del curso">
+                </div>
+                {{nombre}}
+                <select class="form-select form-select form-select-lg mb-3" [(ngModel)]="data.tipoCurso">
+                    <option selected>Tipo de curso...</option>
+                    <option *ngFor="let tipo of tipoCurso" [value]="tipo">{{tipo}}</option>
+                </select>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="txtProveedor">Proveedor</label>
+                    <input type="text" class="form-control form-control-lg" id="txtProveedor" placeholder="Nombre del proveedor">
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="txtDate">Fecha</label>
+                    <input type="date" class="form-control form-control-lg" id="txtDate">
+                </div>
+                <div class="form-group mb-3">
+                    <label class="form-label" for="txtDuración">Duración</label>
+                    <input type="time" class="form-control form-control-lg" id="txtDuración">
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 mb-3">
+                        <div class="d-grid gap-2 mx-auto">
+                            <button class="btn btn-outline-danger">Cancelar</button>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="d-grid mx-auto">
+                            <button class="btn btn-outline-success">Guardar</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<pre>
+    {{data | json}}
+</pre>
+<app-footer></app-footer>

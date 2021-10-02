@@ -17,6 +17,7 @@ import { NabvarComponent } from './pages/nabvar/nabvar.component';
 import { NewCourseComponent } from './pages/new-course/new-course.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { CoursesComponent } from './pages/courses/courses.component';
+import { NavbarComponent } from './pages/home/navbar/navbar.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { CoursesComponent } from './pages/courses/courses.component';
     NabvarComponent,
     NewCourseComponent,
     FooterComponent,
-    CoursesComponent
+    CoursesComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

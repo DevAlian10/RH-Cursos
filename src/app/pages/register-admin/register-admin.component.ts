@@ -64,7 +64,7 @@ export class RegisterAdminComponent implements OnInit {
         });
     }
 
-    data: User = { id: "", nombre:"", apellidos: "", departamento: "", puesto:"", email:"", password:"", type:"", avatar:"" };
+    data: User = { id: "", nombre:"", apellidoP: "", apellidoM: "", sexo: "", departamento: "", puesto:"", email:"", password:"", type:"", avatar:"" };
 
     /* Register Users */
     register(){
@@ -72,7 +72,7 @@ export class RegisterAdminComponent implements OnInit {
             return;
         }
         this.data.nombre = this.formRegister.get('nombre')?.value;
-        this.data.apellidos = this.formRegister.get('apellidos')?.value;
+        this.data.apellidoP = this.formRegister.get('apellidos')?.value;
         this.data.departamento = this.formRegister.get('departamento')?.value;
         this.data.puesto = this.formRegister.get('puesto')?.value;
         this.data.email = this.formRegister.get('email')?.value;
