@@ -1,0 +1,41 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="card text-center my-3">
+        <div class="card-header py-2 fondo">
+            <h4 class="text-white">Contacto</h4>
+        </div>
+    </div>
+    <div class="row mb-0">
+        <div class="col-sm-12 col-md-6 col-lg-6 mb-3">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h6>Dudas, Comentarios o Sugerencias</h6>
+                </div>
+                <img src="../../../../assets/gif/Idea.gif" class="img-fluid">
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-6">
+            <div class="card mb-0">
+                <div class="card-header text-center">
+                    <h6>Escríbenos</h6>
+                </div>
+                <div class="card-body mb-0">
+                    <form [formGroup]="formMensaje" class="mb-0">
+                        <div class="form-group">
+                            <label for="txtAsunto" class="form-label">Asunto</label>
+                            <input type="text" class="form-control form-control-lg" formControlName="asunto" id="txtAsunto" placeholder="Tema que desea contarnos">
+                        </div>
+                        <div class="form-group">
+                            <label for="txtMensaje" class="form-label">Mensaje</label>
+                            <textarea class="form-control form-control-lg" formControlName="mensaje" id="txtMensaje" rows="7"></textarea>
+                        </div>
+                        <div class="form-group text-center">
+                            <button class="btn fondo" (click)="send()" [disabled]="!formMensaje.valid">Enviar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<app-footer></app-footer>

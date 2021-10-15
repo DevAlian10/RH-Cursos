@@ -37,8 +37,6 @@ export class LoginComponent implements OnInit {
     //Método para iniciar sesión
     singIn() {
         this.authService.login(this.formLogin.value.email, this.formLogin.value.password);
-        console.log(this.formLogin);
-        
     }
 
     //Método para registrar un nuevo Usuario

@@ -11,7 +11,7 @@ p{
     }
 }
 
-@media (max-width: 768px){
+@media (min-width: 559px){
     .py-4{
         padding-top: 8px !important;
         padding-bottom: 8px !important;

@@ -20,16 +20,18 @@ export class AuthService {
         public ngZone: NgZone //Permite tomar el control cuando se ha salido de la zona angular
     ) {
         /* Guardar los datos del usuario en localstorage cuando inicia Sesión y anularla cuando cierra Sesión */
-        this.afAuth.authState.subscribe(async user => {
+        this.afAuth.authState.subscribe(user => {
             if (user) {              
-                localStorage.setItem('localStorageUSer', JSON.stringify(user));
-                await JSON.parse(localStorage.getItem('localStorageUSer')!);
+                localStorage.setItem('Data', JSON.stringify(user));
+                JSON.parse(localStorage.getItem('Data')!);
                 this.getUser(user.uid).subscribe(async res => {
                     this.loginUser = {
                         nombre: res?.nombre,
                         apellidoP: res?.apellidoP,
-                        id: res?.id
+                        id: res?.id,
+                        email: res?.email
                     };
+                    const save = await this.loginUser;
                     localStorage.setItem('User', JSON.stringify(this.loginUser));
                     if (res?.type === 'Administrador') {
                         await this.router.navigate(['auth']);
@@ -38,12 +40,14 @@ export class AuthService {
                         await this.router.navigate(['user']);
                     }
                     else {
+                        alert('Hola desde el init');
                         await this.router.navigate(['auth']);
                     }
                 });
             } else {
-                localStorage.setItem('localStorageUser', null!);
-                JSON.parse(localStorage.getItem('localStorageUser')!);
+                localStorage.setItem('Data', null!);
+                JSON.parse(localStorage.getItem('Data')!);
+                localStorage.removeItem('User');
             }
         });
     }
@@ -54,7 +58,8 @@ export class AuthService {
             this.getUser(user.user?.uid!).subscribe(res => {
                 this.loginUser = {
                     nombre: res?.nombre,
-                    apellidoP: res?.apellidoP
+                    apellidoP: res?.apellidoP,
+                    id: res?.id
                 };
                 localStorage.setItem('User', JSON.stringify(this.loginUser));
                 if (user.user?.emailVerified !== true && res?.type === 'Administrador') {
@@ -72,29 +77,72 @@ export class AuthService {
     }
 
     //Iniciar Sesión con correo y contrseña
-    signIn(email: string, password: string) {
-        return this.afAuth.signInWithEmailAndPassword(email, password).then(async res => {
+    async signIn(email: string, password: string) {
+        try {
+            const user = await this.afAuth.signInWithEmailAndPassword(email, password);
+            this.getUser(user.user?.uid!).subscribe(res => {
+                this.loginUser = {
+                    nombre: res?.nombre,
+                    apellidoP: res?.apellidoP,
+                    id: res?.id
+                };
+                localStorage.setItem('User', JSON.stringify(this.loginUser));
+                if (user.user?.emailVerified !== true && res?.type === 'Administrador') {
+                    this.router.navigate(['auth']);
+                } if (user.user?.emailVerified !== true && res?.type === 'Usuario') {
+                    this.router.navigate(['user']);
+                }
+                else {
+                    console.log('Password incorrecto');
+                }
+            });
+        } catch (error) {
+            alert(error);
+        }
+        /* return this.afAuth.signInWithEmailAndPassword(email, password).then(async res => {
             if (res.user?.emailVerified === false) {
-                /* this.ngZone.run(() => { */
-                /* this.setUserData(res.user); */
-                (await this.getUser(res.user?.uid!)).subscribe(async user => {
-                    if (await user?.type == 'Administrador') {
+                this.ngZone.run(() => {
+                this.setUserData(res.user);
+                const user = this.getUser(res.user?.uid!);
+                user.subscribe(user => {
+                    this.loginUser = {
+                        nombre: user?.nombre,
+                        apellidoP: user?.apellidoP,
+                        id: user?.id
+                    };
+                    localStorage.setItem('User', JSON.stringify(this.loginUser));
+                    if (user?.type == 'Administrador') {
                         alert('Hola Admin');
                         this.router.navigate(['dashboard']);
                     }
                     else {
-                        await this.router.navigate(['inicio']);
+                        this.router.navigate(['inicio']);
+                        alert('Hola User');
+                    }
+                })
+                this.getUser(res.user?.uid!).subscribe(user => {
+                    this.loginUser = {
+                        nombre: user?.nombre,
+                        apellidoP: user?.apellidoP,
+                        id: user?.id
+                    };
+                    localStorage.setItem('User', JSON.stringify(this.loginUser));
+                    if (user?.type == 'Administrador') {
+                        alert('Hola Admin');
+                        this.router.navigate(['dashboard']);
+                    }
+                    else {
+                        this.router.navigate(['inicio']);
                         alert('Hola User');
                     }
                 });
-                /* }); */
             } else {
                 this.router.navigate(['/']);
                 window.alert('Solicite acceso al Departamento de RH');
             }
         }).catch(error => {
             window.alert(error.message);
-        });
+        }); */
     }
 
     //Registrarse con correo y contraseña
@@ -131,7 +179,7 @@ export class AuthService {
 
     //Verificar cuando el Usuario se loquea y que el correo este verificado
     get isLoggedIn(): boolean {
-        const user = JSON.parse(localStorage.getItem('localStorageUSer')!);
+        const user = JSON.parse(localStorage.getItem('Data')!);
         return (user !== null && user.emailVerified === false) ? true : false;
     }
 
@@ -151,10 +199,13 @@ export class AuthService {
     } */
 
     //Cerrar Sesión
-    async signOut() {
-        return await this.afAuth.signOut().then(async () => {
-            /* await localStorage.removeItem('dataUser'); */
-            await this.router.navigate(['/']);
+    signOut() {
+        return this.afAuth.signOut().then(() => {
+            localStorage.removeItem('User');
+            localStorage.removeItem('Data');
+            setTimeout(async () => {
+                await this.router.navigate(['/']);
+            }, 2000);
         });
     }
 }

@@ -5,45 +5,59 @@
             <h2>Registrar curso</h2>
         </div>
         <div class="card-body">
-            <form class="form">
+            <form [formGroup]="formCurso" class="form">
                 <div class="form-group mb-3">
-                    <label class="form-label" for="txtNombre">Curso</label>
-                    <input type="text" class="form-control form-control-lg" id="txtNombre" placeholder="Nombre del curso">
-                </div>
-                {{nombre}}
-                <select class="form-select form-select form-select-lg mb-3" [(ngModel)]="data.tipoCurso">
-                    <option selected>Tipo de curso...</option>
-                    <option *ngFor="let tipo of tipoCurso" [value]="tipo">{{tipo}}</option>
-                </select>
-                <div class="form-group mb-3">
-                    <label class="form-label" for="txtProveedor">Proveedor</label>
-                    <input type="text" class="form-control form-control-lg" id="txtProveedor" placeholder="Nombre del proveedor">
+                    <label class="form-label" for="txtNombre">Nombre del curso</label>
+                    <input type="text" class="form-control form-control-lg" formControlName="nombre" id="txtNombre"
+                        placeholder="Nombre del curso">
                 </div>
                 <div class="form-group mb-3">
-                    <label class="form-label" for="txtDate">Fecha</label>
-                    <input type="date" class="form-control form-control-lg" id="txtDate">
+                    <label class="form-label" for="txtProveedor">Nomre del proveedor</label>
+                    <input type="text" class="form-control form-control-lg" formControlName="proveedor"
+                        id="txtProveedor" placeholder="Nombre del proveedor">
                 </div>
-                <div class="form-group mb-3">
-                    <label class="form-label" for="txtDuración">Duración</label>
-                    <input type="time" class="form-control form-control-lg" id="txtDuración">
-                </div>
-                <div class="row">
-                    <div class="col-sm-12 col-md-6 mb-3">
-                        <div class="d-grid gap-2 mx-auto">
-                            <button class="btn btn-outline-danger">Cancelar</button>
+                <div class="row mb-3">
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="cmbTipo">Tipo de curso</label>
+                            <select class="form-control form-control-lg" formControlName="tipo" id="cmbTipo">
+                                <option selected [value]="item" *ngFor="let item of tipo">{{item}}</option>
+                            </select>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6">
-                        <div class="d-grid mx-auto">
-                            <button class="btn btn-outline-success">Guardar</button>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="txtDate">Fecha</label>
+                            <input type="date" class="form-control form-control-lg" formControlName="fecha" id="txtDate">
                         </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="txtDuración">Duración</label>
+                            <input type="text" class="form-control form-control-lg" formControlName="duracion"
+                                id="txtDuración">
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-6 col-lg-3">
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="cmbHora">Hora / Minutos</label>
+                            <select class="form-control form-control-lg" formControlName="tiempo" id="cmbHora">
+                                <option selected [value]="item" *ngFor="let item of time">{{item}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-12 col-md-6 mb-3">
+                        <button class="btn btn-outline-danger btn-block" (click)="actionBack()"><span class="icon"><i class="far fa-times-circle"></i></span>{{ action_back }}</button>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <button class="btn btn-outline-success btn-block" (click)="actionRun()" [disabled]="!formCurso.valid"><span class="icon"><i class="far fa-save"></i></span>{{ action }}</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
 </div>
-<pre>
-    {{data | json}}
-</pre>
 <app-footer></app-footer>

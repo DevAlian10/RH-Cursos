@@ -1,0 +1,33 @@
+<app-navbar></app-navbar>
+<div class="container">
+    <div class="card text-center my-3">
+        <div class="card-header py-2 fondo">
+            <h2 class="text-white">Mis cursos </h2>
+        </div>
+    </div>
+    <div class="">
+        <table class="table m-auto table-responsive-md table-responsive-lg table-responsive-xl table-hover">
+            <thead>
+              <tr>
+                <th scope="col">Nombre</th>
+                <th scope="col">Tipo</th>
+                <th scope="col">Proveedor</th>
+                <th scope="col">Fecha</th>
+                <th scope="col">Horas</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of listCursos">
+                <td >{{item.nombre}}</td>
+                <td >{{item.tipo}}</td>
+                <td class="fs-6">{{item.proveedor}}</td>
+                <td class="fs-6">{{item.fecha}}</td>
+                <td class="fs-6">{{item.duracion}}</td>
+                <td class="fs-6 text-center"><i class="fas fa-pencil-alt edit" [routerLink]="['/user/registerCourse', item.id]"></i><i class="fas fa-trash delete" (click)="deleteCurso(item.id)"></i></td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+</div>
+<app-footer></app-footer>

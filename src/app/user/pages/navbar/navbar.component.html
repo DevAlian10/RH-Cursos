@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
     <div class="container py-1">
-        <a class="navbar-brand" routerLink="/inicio">
+        <a class="navbar-brand" routerLink="/user/home">
             <img src="../../../../assets/img/logo_alian.png" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01"
@@ -8,26 +8,23 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav me-auto">
+            <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" routerLink="/inicio">Inicio
-                        <span class="visually-hidden">(current)</span>
-                    </a>
+                    <a class="nav-link" routerLink="/user/home" routerLinkActive="active">Inicio</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/dashboard">Mis cursos</a>
+                    <a class="nav-link" routerLink="/user/curso" routerLinkActive="active">Mis cursos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/inicio">Registrar curso</a>
+                    <a class="nav-link" routerLink="/user/registerCourse" routerLinkActive="active">Registrar curso</a>
                 </li>
                 <li  class="nav-item">
                     <!-- *ngIf="user.type !== 'Usuario'" -->
-                    <a class="nav-link" routerLink="/inicio">Dentro de home</a>
+                    <a class="nav-link" routerLink="/user/contacto" routerLinkActive="active">Contacto</a>
                 </li>
             </ul>
             <div class="d-flex">
                 <button class="btn btn-danger" (click)="singOut()">Cerrar sesión</button>
-                <!-- (click)="signOut()" -->
             </div>
         </div>
     </div>
